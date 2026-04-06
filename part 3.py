@@ -1,0 +1,36 @@
+import hashlib
+
+def hash_string(data):
+    return hashlib.sha256(data.encode()).hexdigest()
+
+def verify_hash(data, hashed):
+    return hash_string(data) == hashed
+
+# Original password
+input_data = "secure_password"
+hashed_data = hash_string(input_data)
+
+print(f"Original Data: {input_data}")
+print(f"Hashed Data: {hashed_data}")
+
+# Verify password
+correct_data = "secure_password"
+incorrect_data = "wrong_password"
+
+print("Verification (correct):", verify_hash(correct_data, hashed_data))
+print("Verification (incorrect):", verify_hash(incorrect_data, hashed_data))
+
+# tambahan kode
+def hash_file(file_path):
+    hasher = hashlib.sha256()
+
+    with open(file_path, 'rb') as file:
+        while chunk := file.read(8192):
+            hasher.update(chunk)
+
+    return hasher.hexdigest()
+
+# Hash the sample file
+file_hash = hash_file("sample.txt")
+
+print(f"File Hash: {file_hash}")
